@@ -1,0 +1,27 @@
+{
+    "name": "wishlistv2/wishlistv2",
+    "description": "wishlistv2/wishlistv2",
+    "type": "shopware-platform-plugin",
+    "version": "1.0.0",
+    "license": "MIT",
+    "require": {
+        "shopware/core": "~6.6.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "Wishlistv2\\Wishlistv2",
+        "label": {
+            "de-DE": "Skeleton plugin",
+            "en-GB": "Skeleton plugin"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Wishlistv2\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wishlistv2\\Tests\\": "tests/"
+        }
+    }
+}

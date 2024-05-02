@@ -1,0 +1,8 @@
+{% sw_extends '@Storefront/storefront/page/account/sidebar.html.twig' %}
+
+{% block page_account_sidebar_menu_inner %}
+{{ parent() }}
+<a href="{{ path('show_wishlist') }}" title="" class="list-group-item list-group-item-action account-aside-item">
+Wishlist</a>
+    
+{% endblock %}

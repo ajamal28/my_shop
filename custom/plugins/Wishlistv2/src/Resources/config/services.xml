@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        
+
+        <service id="Wishlistv2\Storefront\Controller\Wishlistv2Controller" public="true">
+            <argument type="service" id="wishlistv2.repository"/>
+            <argument type="service" id="product.repository" />
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="Wishlistv2\Core\Content\Wishlistv2\Wishlistv2Definition">
+            <tag name="shopware.entity.definition" entity="wishlistv2" />
+        </service>
+
+         <!-- Define the entity repository service -->
+         <service id="wishlistv2.wishlist_repository" class="Shopware\Core\Framework\DataAbstractionLayer\EntityRepository">
+            <argument type="service" id="Wishlistv2\Core\Content\Wishlistv2\Wishlistv2Definition"/>
+        </service>
+
+        
+
+    </services>
+</container>
