@@ -25,12 +25,15 @@ class Wishlistv2Controller extends AbstractController
 
     private $productRepository;
 
+    private $customerRepository;
+
     public $context;
 
-    public function __construct(EntityRepository  $wishlistRepository, EntityRepository $productRepository)
+    public function __construct(EntityRepository  $wishlistRepository, EntityRepository $productRepository, EntityRepository $customerRepository)
     {
        $this->wishlistRepository = $wishlistRepository; 
        $this->productRepository = $productRepository;
+       $this->customerRepository = $customerRepository;
        
     }
     
@@ -125,6 +128,9 @@ class Wishlistv2Controller extends AbstractController
     foreach ($wishlistItems->getEntities() as $wishlistItem) {
         // Access productId from each Wishlist entity directly
         $productId = $wishlistItem->productId;
+        $userId = $wishlistItem->userId;
+
+        
 
         $productcriteria = new Criteria([$productId]);
         $productcriteria->addAssociation('cover');
@@ -140,6 +146,7 @@ class Wishlistv2Controller extends AbstractController
        // Render the template with products array available
     return $this->render('@Wishlistv2/storefront/page/account/_page.html.twig', [
         'products' => $products,
+        'user' =>$userId
     ]);
     }
 
@@ -187,6 +194,68 @@ class Wishlistv2Controller extends AbstractController
         foreach ($wishlistItems as $wishlistItem) {
             $this->wishlistRepository->delete([['id' => $wishlistItem->id]], $context);
         }
+        
     }
+
+    #[Route(
+        path: 'share',
+        methods: ['GET']
+    )]
+    public function getUserBY(Request $request, Context $context)
+    {
+        $shareId = $request->query->get('shareId'); 
+
+        if ($shareId) {
+        //Getting Customer name by searching ID
+        $customerCriteria = new Criteria();
+        $customerCriteria->addFilter(new EqualsFilter('id', $shareId));
+        $customers = $this->customerRepository->search($customerCriteria, $context);
+        
+        foreach($customers->getEntities() as $customer){
+            $customerName = $customer->firstName;
+      }
+        //fINDING PRODUCTS BY USER id
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('userId', $shareId));
+        $wishlistItems = $this->wishlistRepository->search($criteria, $context);
+
+        foreach ($wishlistItems->getEntities() as $wishlistItem) {
+            // Access productId from each Wishlist entity directly
+            
+            $productId = $wishlistItem->productId;
+            
+            
+
+            
+    
+            $productcriteria = new Criteria([$productId]);
+            $productcriteria->addAssociation('cover');
+    
+            // Retrieve product entity based on productId
+            $product = $this->productRepository->search($productcriteria, $context)->first();
+    
+            // If product exists, add it to the array
+            if ($product) {
+                $products[] = $product;
+            }
+
+            
+        }
+        
+        
+
+        return $this->render('@Wishlistv2/storefront/page/checkout/cart/index.html.twig', [
+            'products' => $products,
+            'customerName' => $customerName,
+            
+        ]);
+        
+
+
+        }
+    }
+
+
+
     
 }
