@@ -10,6 +10,7 @@
         <service id="Wishlistv2\Storefront\Controller\Wishlistv2Controller" public="true">
             <argument type="service" id="wishlistv2.repository"/>
             <argument type="service" id="product.repository" />
+            <argument type="service" id="customer.repository" />
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>

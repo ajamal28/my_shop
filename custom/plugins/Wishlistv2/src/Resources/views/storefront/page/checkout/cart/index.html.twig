@@ -1,8 +1,7 @@
-{% sw_extends '@Storefront/storefront/page/account/_page.html.twig' %}
+{% sw_extends '@Storefront/storefront/page/checkout/cart/index.html.twig' %}
 
-{% block page_account_main_content %}
-<h3>Your wishlist</h3>
-<a href="http://aj-training.co.uk/my_shop/public/share?shareId={{ user }}" class="btn btn-primary" style="margin-bottom: 5vh">Share wishlist</a>
+{% block page_checkout_container %}
+<h2>{{ customerName }}'s wishlist</h2>
 
 
 <table class="table">
@@ -11,6 +10,7 @@
             <th>Name</th>
             <th>Image</th>
             <th>URL</th>
+            <th>price</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -18,6 +18,7 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.translated.name }}</td>
+
                 <td>
                 <img src="{{ product.cover.media.url}}" alt="{{ product.translated.name }}" style="max-width: 100px; max-height: 100px;">
                 </td>
@@ -25,14 +26,27 @@
                     <a href="{{ path('frontend.detail.page', {'productId': product.id}) }}">View Product</a>
                 </td>
                 <td>
+                {% if product.price.elements|length > 0 %}
+                {% set price = product.price.elements|first %}
+                    {% set currencyId = price.currencyId %}
+                    {% set currency = currencyId ? context.salesChannel.currency(currencyId) : null %}
+                    {% set currencySymbol = currency ? currency.symbol : '' %}
+                    <p>{{ currencySymbol }}{{ price.gross }}</p>
+                    {% else %}
+                    <p>No price available for this product.</p>
+                    {% endif %}
+                            
+                
+                </td>
+                <td>
                     <form action="{{ path('wishlist_delete', {'productId': product.id}) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this product from your wishlist?');">
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
                     </form>
                 </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
-    
+
 {% endblock %}
