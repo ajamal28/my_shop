@@ -10,8 +10,8 @@
     "extra": {
         "shopware-plugin-class": "Wishlistv2\\Wishlistv2",
         "label": {
-            "de-DE": "Skeleton plugin",
-            "en-GB": "Skeleton plugin"
+            "de-DE": "Wishlist Plugin",
+            "en-GB": "Wishlist Plugin"
         }
     },
     "autoload": {

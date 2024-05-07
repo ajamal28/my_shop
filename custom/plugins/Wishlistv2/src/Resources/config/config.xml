@@ -6,11 +6,13 @@
     <card>
         <title>Minimal configuration</title>
 
-        <input-field type="text">
-            <name>textField</name>
-            <label>Test field with default value</label>
-            <defaultValue>test</defaultValue>
+        
+        <input-field type="checkbox">
+            <name>active</name>
+            <label>Activate Plugin</label>
+            <defaultValue>false</defaultValue>
         </input-field>
     </card>
+
 
 </config>

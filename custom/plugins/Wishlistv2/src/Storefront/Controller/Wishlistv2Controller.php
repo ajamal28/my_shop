@@ -43,6 +43,7 @@ class Wishlistv2Controller extends AbstractController
     {
         // Check if user is logged in
     if (!$customer->getCustomer()) {
+        $this->addFlash('danger', 'Please login to add to wishlist.');
         return $this->redirectToRoute('frontend.account.login');
     }
 
@@ -158,16 +159,18 @@ class Wishlistv2Controller extends AbstractController
     
         $customerId = $customer->getCustomer()->getId();
     
-        // Check if the product is in the wishlist
+        
         if ($this->isProductInWishlist($customerId, $productId, $context)) {
-            // If the product is in the wishlist, remove it
+            
             $this->removeFromUserWishlist($customerId, $productId, $context);
-            // Return a success response
-            return $this->addFlash('success', 'Product removed from your wishlist.');
+            
+            $this->addFlash('success', 'Product removed from your wishlist.');
+        } else {
+            $this->addFlash('warning', 'Product is not found in wishlist.');
         }
     
-        // If the product is not in the wishlist, return a failure response
-        $this->addFlash('warning', 'Product is not found in wishlist.');
+        
+        
 
         return $this->redirectToRoute('show_wishlist');
     }

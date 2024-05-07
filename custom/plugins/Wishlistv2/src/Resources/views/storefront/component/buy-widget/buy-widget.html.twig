@@ -1,10 +1,14 @@
 {% sw_extends '@Storefront/storefront/component/buy-widget/buy-widget.html.twig' %}
 
 {% block buy_widget_tax %}
-{{ parent() }}
+    {{ parent() }}
 
-<a href="{{ path('my_plugin_wishlist_add', {'productId': page.product.id}) }} " class="btn10" style="margin:10px"><span>Add to Wish List</span></a>
-
-
+    {% set isPluginActive = config("Wishlistv2.config.active") %}
+    {% if isPluginActive %}
+        <a href="{{ path('my_plugin_wishlist_add', {'productId': page.product.id}) }}" class="btn btn-warning" style="margin: 1px">
+            <span>Add to Wish List</span>
+        </a>
+    {% endif %}
 {% endblock %}
+
    
