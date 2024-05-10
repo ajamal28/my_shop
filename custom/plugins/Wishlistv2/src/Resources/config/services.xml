@@ -11,6 +11,7 @@
             <argument type="service" id="wishlistv2.repository"/>
             <argument type="service" id="product.repository" />
             <argument type="service" id="customer.repository" />
+            <argument type="service" id="Shopware\Core\Checkout\Cart\SalesChannel\CartService" />
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
@@ -20,9 +21,14 @@
             <tag name="shopware.entity.definition" entity="wishlistv2" />
         </service>
 
-         <!-- Define the entity repository service -->
+        
          <service id="wishlistv2.wishlist_repository" class="Shopware\Core\Framework\DataAbstractionLayer\EntityRepository">
             <argument type="service" id="Wishlistv2\Core\Content\Wishlistv2\Wishlistv2Definition"/>
+        </service>
+
+        <service id="Wishlistv2\Subscriber\WishlistSubscriber">
+            <argument type="service" id="Wishlistv2\Storefront\Controller\Wishlistv2Controller"/>
+            <tag name="kernel.event_subscriber"/>
         </service>
 
         
