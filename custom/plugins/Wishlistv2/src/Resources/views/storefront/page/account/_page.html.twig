@@ -12,6 +12,7 @@
             <th>Image</th>
             <th>URL</th>
             <th>Action</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -29,10 +30,53 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
-                </td>
+                    </td>
+                    
+                    <td>
+                    <form  class="add-to-cart-form" action="{{ path('frontend.wishlist.to.cart', {'productId': product.id}) }}" method="POST">
+                    <input type="hidden">
+                    <button  type="submit"  class="btn btn-success" style="margin-bottom: 5vh"  >Add to Basket</button>
+                    
+                    </form>
+                    </td>
+                    
+                    
             </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<div id="cart-anchor" data-off-canvas-cart="true"><a></a></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartForms = document.querySelectorAll('.add-to-cart-form');
+    const anchor = document.getElementById('cart-anchor');
+    
+    addToCartForms.forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            
+            // Submit the form
+            form.submit();
+
+            
+            
+
+            setTimeout(delay, 400);
+
+            function delay(){
+                if (anchor) {
+                    anchor.click();
+                }
+            }
+
+            
+        });
+    });
+});
+
+</script>
     
 {% endblock %}
