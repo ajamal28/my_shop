@@ -4,16 +4,16 @@ namespace Wishlistv2\Subscriber;
 
 
 use Shopware\Core\Checkout\Cart\LineItem\LineItem;
-use Wishlistv2\Storefront\Controller\Wishlistv2Controller;
 use Shopware\Core\Checkout\Cart\Event\CheckoutOrderPlacedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Wishlistv2\Service\WishlistService;
 
 class WishlistSubscriber implements EventSubscriberInterface
 
 {
     private $wishlistService;
 
-    public function __construct(Wishlistv2Controller $wishlistService)
+    public function __construct(WishlistService $wishlistService)
     {
         $this->wishlistService = $wishlistService;
     }
