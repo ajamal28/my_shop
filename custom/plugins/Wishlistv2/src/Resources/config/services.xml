@@ -12,6 +12,7 @@
             <argument type="service" id="product.repository" />
             <argument type="service" id="customer.repository" />
             <argument type="service" id="Shopware\Core\Checkout\Cart\SalesChannel\CartService" />
+            <argument type="service" id="Wishlistv2\Service\WishlistService" />
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
@@ -27,9 +28,15 @@
         </service>
 
         <service id="Wishlistv2\Subscriber\WishlistSubscriber">
-            <argument type="service" id="Wishlistv2\Storefront\Controller\Wishlistv2Controller"/>
+            <argument type="service" id="Wishlistv2\Service\WishlistService" />
             <tag name="kernel.event_subscriber"/>
         </service>
+
+        
+        <service id="Wishlistv2\Service\WishlistService">
+        <argument type="service" id="wishlistv2.repository"/>
+        </service>
+        
 
         
 
